@@ -15,6 +15,7 @@ public class Goods {
     private String content;
     private Integer salesVolume;
     private List<GoodsLabel> goodsLabelList;
+    private List<GoodsImage> goodsImageList;
 
     public String getId() {
         return id;
@@ -70,5 +71,13 @@ public class Goods {
 
     public void setGoodsLabelList(List<GoodsLabel> goodsLabelList) {
         this.goodsLabelList = goodsLabelList;
+    }
+
+    public List<GoodsImage> getGoodsImageList() {
+        return goodsImageList;
+    }
+
+    public void setGoodsImageList(List<GoodsImage> goodsImageList) {
+        this.goodsImageList = goodsImageList;
     }
 }

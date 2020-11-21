@@ -1,6 +1,7 @@
 package com.bc.mall.v2.server.service.impl;
 
 import com.bc.mall.v2.server.entity.Goods;
+import com.bc.mall.v2.server.entity.GoodsImage;
 import com.bc.mall.v2.server.entity.GoodsLabel;
 import com.bc.mall.v2.server.mapper.GoodsLabelMapper;
 import com.bc.mall.v2.server.mapper.GoodsMapper;
@@ -34,8 +35,8 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public Goods getGoodsByGoodsId(Map<String, Object> paramMap) {
-        List<Goods> goodsList =  goodsMapper.getGoodsListByGoodsId(paramMap);
-        if(!CollectionUtils.isEmpty(goodsList)){
+        List<Goods> goodsList = goodsMapper.getGoodsListByGoodsId(paramMap);
+        if (!CollectionUtils.isEmpty(goodsList)) {
             return goodsList.get(0);
         }
         return null;
@@ -48,7 +49,18 @@ public class GoodsServiceImpl implements GoodsService {
      * @return 商品标签列表
      */
     @Override
-    public List<GoodsLabel> getGoodsLabelListByGoodsId(Map<String, Object> paramMap){
+    public List<GoodsLabel> getGoodsLabelListByGoodsId(Map<String, Object> paramMap) {
         return goodsLabelMapper.getGoodsLabelListByGoodsId(paramMap);
+    }
+
+    /**
+     * 通过商品ID获取商品图片列表
+     *
+     * @param paramMap 参数map
+     * @return 商品图片列表
+     */
+    @Override
+    public List<GoodsImage> getGoodsImageListByGoodsId(Map<String, Object> paramMap) {
+        return goodsMapper.getGoodsImageListByGoodsId(paramMap);
     }
 }

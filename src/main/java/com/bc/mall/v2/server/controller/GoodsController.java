@@ -2,6 +2,7 @@ package com.bc.mall.v2.server.controller;
 
 import com.bc.mall.v2.server.cons.Constant;
 import com.bc.mall.v2.server.entity.Goods;
+import com.bc.mall.v2.server.entity.GoodsImage;
 import com.bc.mall.v2.server.entity.GoodsLabel;
 import com.bc.mall.v2.server.service.GoodsService;
 import io.swagger.annotations.ApiOperation;
@@ -49,8 +50,14 @@ public class GoodsController {
             paramMap.put("goodsId", goodsId);
             Goods goods = goodsService.getGoodsByGoodsId(paramMap);
 
+            // 商品标签
             List<GoodsLabel> goodsLabelList = goodsService.getGoodsLabelListByGoodsId(paramMap);
             goods.setGoodsLabelList(goodsLabelList);
+
+            // 商品图片
+            List<GoodsImage> goodsImageList = goodsService.getGoodsImageListByGoodsId(paramMap);
+            goods.setGoodsImageList(goodsImageList);
+
             responseEntity = new ResponseEntity<>(goods, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

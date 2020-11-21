@@ -9,11 +9,27 @@
         <result column="sales_volume" property="salesVolume" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap id="goodsImage" type="com.bc.mall.v2.server.entity.GoodsImage">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <select id="getGoodsListByGoodsId" parameterType="map" resultMap="goods">
         select
         *
         from t_goods
         where
         id = #{goodsId}
+    </select>
+
+    <select id="getGoodsImageListByGoodsId" parameterType="map" resultMap="goodsImage">
+        select
+        *
+        from t_goods_image
+        where
+        goods_id = #{goodsId}
+        order by sort asc
     </select>
 </mapper>
