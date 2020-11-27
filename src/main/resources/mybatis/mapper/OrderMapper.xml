@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bc.mall.v2.server.mapper.OrderMapper">
+    <resultMap id="order" type="com.bc.mall.v2.server.entity.Order">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="store_name" property="storeName" jdbcType="VARCHAR"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goods_price" property="goodsPrice" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="goods_number" property="goodsNumber" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="freight" property="freight" jdbcType="VARCHAR"/>
+        <result column="pay_status" property="payStatus" jdbcType="VARCHAR"/>
+        <result column="total_price" property="totalPrice" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getOrderListForAdmin" parameterType="map" resultMap="order">
+        select
+        *
+        from t_mall_order
+        order by create_time desc
+    </select>
+</mapper>
