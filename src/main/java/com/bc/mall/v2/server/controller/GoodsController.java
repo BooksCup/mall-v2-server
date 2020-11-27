@@ -2,6 +2,7 @@ package com.bc.mall.v2.server.controller;
 
 import com.bc.mall.v2.server.cons.Constant;
 import com.bc.mall.v2.server.entity.Goods;
+import com.bc.mall.v2.server.entity.GoodsLabel;
 import com.bc.mall.v2.server.service.GoodsService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,6 +48,9 @@ public class GoodsController {
             Map<String, Object> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
             paramMap.put("goodsId", goodsId);
             Goods goods = goodsService.getGoodsByGoodsId(paramMap);
+
+            List<GoodsLabel> goodsLabelList = goodsService.getGoodsLabelListByGoodsId(paramMap);
+            goods.setGoodsLabelList(goodsLabelList);
             responseEntity = new ResponseEntity<>(goods, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

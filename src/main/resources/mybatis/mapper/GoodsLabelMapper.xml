@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bc.mall.v2.server.mapper.GoodsLabelMapper">
+    <resultMap id="goodsLabel" type="com.bc.mall.v2.server.entity.GoodsLabel">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getGoodsLabelListByGoodsId" parameterType="map" resultMap="goodsLabel">
+        select
+        *
+        from t_goods_label
+        where
+        goods_id = #{goodsId}
+        order by sort asc
+    </select>
+</mapper>

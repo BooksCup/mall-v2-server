@@ -1,5 +1,7 @@
 package com.bc.mall.v2.server.entity;
 
+import java.util.List;
+
 /**
  * 商品
  *
@@ -12,6 +14,7 @@ public class Goods {
     private String sellPrice;
     private String content;
     private Integer salesVolume;
+    private List<GoodsLabel> goodsLabelList;
 
     public String getId() {
         return id;
@@ -59,5 +62,13 @@ public class Goods {
 
     public void setSalesVolume(Integer salesVolume) {
         this.salesVolume = salesVolume;
+    }
+
+    public List<GoodsLabel> getGoodsLabelList() {
+        return goodsLabelList;
+    }
+
+    public void setGoodsLabelList(List<GoodsLabel> goodsLabelList) {
+        this.goodsLabelList = goodsLabelList;
     }
 }
