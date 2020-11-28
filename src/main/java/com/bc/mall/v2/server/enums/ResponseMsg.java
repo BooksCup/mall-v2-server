@@ -12,6 +12,9 @@ public enum ResponseMsg {
      */
     ADD_GOODS_SKU_SUCCESS("ADD_GOODS_SKU_SUCCESS", "新增商品SKU成功!"),
     ADD_GOODS_SKU_ERROR("ADD_GOODS_SKU_ERROR", "新增商品SKU失败!"),
+
+    ADD_USER_ADDRESS_SUCCESS("ADD_USER_ADDRESS_SUCCESS", "新增收货地址成功!"),
+    ADD_USER_ADDRESS_ERROR("ADD_USER_ADDRESS_ERROR", "新增收货地址失败!"),
     ;
 
     ResponseMsg(String responseCode, String responseMessage) {
