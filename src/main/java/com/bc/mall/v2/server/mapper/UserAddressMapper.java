@@ -19,10 +19,24 @@ public interface UserAddressMapper {
     void addUserAddress(UserAddress userAddress);
 
     /**
+     * 修改用户收货地址
+     *
+     * @param userAddress 用户收货地址
+     */
+    void updateUserAddress(UserAddress userAddress);
+
+    /**
      * 获取用户收货地址列表
      *
      * @param userId 用户ID
      * @return 用户收货地址列表
      */
     List<UserAddress> getUserAddressList(String userId);
+
+    /**
+     * 删除用户收货地址
+     *
+     * @param addressId 地址ID
+     */
+    void deleteUserAddress(String addressId);
 }

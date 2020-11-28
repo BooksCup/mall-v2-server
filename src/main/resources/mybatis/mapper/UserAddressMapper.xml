@@ -50,4 +50,23 @@
         where user_id = #{userId}
         order by create_time desc
     </select>
+
+    <delete id="deleteUserAddress" parameterType="String">
+        delete
+        from t_user_address
+        where id = #{addressId}
+    </delete>
+
+    <update id="updateUserAddress" parameterType="com.bc.mall.v2.server.entity.UserAddress">
+        update t_user_address
+        set
+        name = #{name},
+        phone = #{phone},
+        province = #{province},
+        city = #{city},
+        district = #{district},
+        address = #{address},
+        is_default = #{isDefault}
+        where id = #{id}
+    </update>
 </mapper>

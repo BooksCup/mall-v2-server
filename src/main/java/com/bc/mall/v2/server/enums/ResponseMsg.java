@@ -15,6 +15,12 @@ public enum ResponseMsg {
 
     ADD_USER_ADDRESS_SUCCESS("ADD_USER_ADDRESS_SUCCESS", "新增收货地址成功!"),
     ADD_USER_ADDRESS_ERROR("ADD_USER_ADDRESS_ERROR", "新增收货地址失败!"),
+
+    UPDATE_USER_ADDRESS_SUCCESS("UPDATE_USER_ADDRESS_SUCCESS", "修改收货地址成功!"),
+    UPDATE_USER_ADDRESS_ERROR("UPDATE_USER_ADDRESS_ERROR", "修改收货地址失败!"),
+
+    DELETE_USER_ADDRESS_SUCCESS("DELETE_USER_ADDRESS_SUCCESS", "删除收货地址成功!"),
+    DELETE_USER_ADDRESS_ERROR("DELETE_USER_ADDRESS_ERROR", "删除收货地址失败!"),
     ;
 
     ResponseMsg(String responseCode, String responseMessage) {

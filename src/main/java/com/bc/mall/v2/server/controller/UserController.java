@@ -28,6 +28,19 @@ public class UserController {
     @Resource
     private UserAddressService userAddressService;
 
+    /**
+     * 新增用户收货地址
+     *
+     * @param userId    用户ID
+     * @param name      收货人
+     * @param phone     联系方式
+     * @param province  省
+     * @param city      市
+     * @param district  区
+     * @param address   详细地址
+     * @param isDefault 是否默认地址
+     * @return ResponseEntity
+     */
     @ApiOperation(value = "新增用户收货地址", notes = "新增用户收货地址")
     @PostMapping(value = "/{userId}/address")
     public ResponseEntity<String> addUserAddress(
@@ -55,6 +68,48 @@ public class UserController {
     }
 
     /**
+     * 修改用户收货地址
+     *
+     * @param userId    用户ID
+     * @param addressId 地址ID
+     * @param name      收货人
+     * @param phone     联系方式
+     * @param province  省
+     * @param city      市
+     * @param district  区
+     * @param address   详细地址
+     * @param isDefault 是否默认地址
+     * @return ResponseEntity
+     */
+    @ApiOperation(value = "修改用户收货地址", notes = "修改用户收货地址")
+    @PutMapping(value = "/{userId}/address/{addressId}")
+    public ResponseEntity<String> updateUserAddress(
+            @PathVariable String userId,
+            @PathVariable String addressId,
+            @RequestParam String name,
+            @RequestParam String phone,
+            @RequestParam String province,
+            @RequestParam String city,
+            @RequestParam String district,
+            @RequestParam String address,
+            @RequestParam String isDefault) {
+        ResponseEntity<String> responseEntity;
+        try {
+            UserAddress userAddress = new UserAddress(addressId, userId, name, phone, province,
+                    city, district, address, isDefault);
+
+            userAddressService.updateUserAddress(userAddress);
+            responseEntity = new ResponseEntity<>(ResponseMsg.UPDATE_USER_ADDRESS_SUCCESS.getResponseCode(), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("[updateUserAddress] error: " + e.getMessage());
+            responseEntity = new ResponseEntity<>(ResponseMsg.UPDATE_USER_ADDRESS_ERROR.getResponseCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+    }
+
+
+    /**
      * 获取用户收货地址列表
      *
      * @param userId 用户ID
@@ -75,4 +130,27 @@ public class UserController {
         }
         return responseEntity;
     }
+
+    /**
+     * 删除用户收货地址
+     *
+     * @param addressId 地址ID
+     * @return ResponseEntity
+     */
+    @ApiOperation(value = "删除用户收货地址", notes = "删除用户收货地址")
+    @DeleteMapping(value = "/{userId}/address/{addressId}")
+    public ResponseEntity<String> deleteUserAddress(
+            @PathVariable String addressId) {
+        ResponseEntity<String> responseEntity;
+        try {
+            userAddressService.deleteUserAddress(addressId);
+            responseEntity = new ResponseEntity<>(ResponseMsg.DELETE_USER_ADDRESS_SUCCESS.getResponseCode(), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("[deleteUserAddress] error: " + e.getMessage());
+            responseEntity = new ResponseEntity<>(ResponseMsg.DELETE_USER_ADDRESS_ERROR.getResponseCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+    }
+
 }

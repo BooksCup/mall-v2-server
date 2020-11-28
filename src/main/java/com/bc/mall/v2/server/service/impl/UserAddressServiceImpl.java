@@ -30,6 +30,16 @@ public class UserAddressServiceImpl implements UserAddressService {
     }
 
     /**
+     * 修改用户收货地址
+     *
+     * @param userAddress 用户收货地址
+     */
+    @Override
+    public void updateUserAddress(UserAddress userAddress) {
+        userAddressMapper.updateUserAddress(userAddress);
+    }
+
+    /**
      * 获取用户收货地址列表
      *
      * @param userId 用户ID
@@ -38,5 +48,15 @@ public class UserAddressServiceImpl implements UserAddressService {
     @Override
     public List<UserAddress> getUserAddressList(String userId) {
         return userAddressMapper.getUserAddressList(userId);
+    }
+
+    /**
+     * 删除用户收货地址
+     *
+     * @param addressId 地址ID
+     */
+    @Override
+    public void deleteUserAddress(String addressId) {
+        userAddressMapper.deleteUserAddress(addressId);
     }
 }

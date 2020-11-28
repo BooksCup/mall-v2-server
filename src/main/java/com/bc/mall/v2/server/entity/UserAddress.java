@@ -36,6 +36,20 @@ public class UserAddress {
         this.isDefault = isDefault;
     }
 
+    public UserAddress(String id, String userId, String name, String phone, String province,
+                       String city, String district, String address, String isDefault) {
+        this.id = id;
+        this.userId = userId;
+        this.name = name;
+        this.phone = phone;
+        this.province = province;
+        this.city = city;
+        this.district = district;
+        this.address = address;
+        this.isDefault = isDefault;
+    }
+
+
     public String getId() {
         return id;
     }
