@@ -11,7 +11,7 @@
         <result column="city" property="city" jdbcType="VARCHAR"/>
         <result column="district" property="district" jdbcType="VARCHAR"/>
         <result column="address" property="address" jdbcType="VARCHAR"/>
-        <result column="isDefault" property="is_default" jdbcType="VARCHAR"/>
+        <result column="is_default" property="isDefault" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="addUserAddress" parameterType="com.bc.mall.v2.server.entity.UserAddress">
@@ -41,5 +41,13 @@
         #{isDefault},
         now()
         )
+    </select>
+
+    <select id="getUserAddressList" parameterType="String" resultMap="userAddress">
+        select
+        *
+        from t_user_address
+        where user_id = #{userId}
+        order by create_time desc
     </select>
 </mapper>

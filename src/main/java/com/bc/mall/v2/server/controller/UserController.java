@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 用户
@@ -48,6 +50,28 @@ public class UserController {
             e.printStackTrace();
             logger.error("[addUserAddress] error: " + e.getMessage());
             responseEntity = new ResponseEntity<>(ResponseMsg.ADD_USER_ADDRESS_ERROR.getResponseCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+    }
+
+    /**
+     * 获取用户收货地址列表
+     *
+     * @param userId 用户ID
+     * @return ResponseEntity
+     */
+    @ApiOperation(value = "获取用户收货地址列表", notes = "获取用户收货地址列表")
+    @GetMapping(value = "/{userId}/address")
+    public ResponseEntity<List<UserAddress>> getUserAddressList(
+            @PathVariable String userId) {
+        ResponseEntity<List<UserAddress>> responseEntity;
+        try {
+            List<UserAddress> userAddressList = userAddressService.getUserAddressList(userId);
+            responseEntity = new ResponseEntity<>(userAddressList, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("[getUserAddressList] error: " + e.getMessage());
+            responseEntity = new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return responseEntity;
     }

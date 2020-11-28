@@ -6,6 +6,7 @@ import com.bc.mall.v2.server.service.UserAddressService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 用户收货地址
@@ -26,5 +27,16 @@ public class UserAddressServiceImpl implements UserAddressService {
     @Override
     public void addUserAddress(UserAddress userAddress) {
         userAddressMapper.addUserAddress(userAddress);
+    }
+
+    /**
+     * 获取用户收货地址列表
+     *
+     * @param userId 用户ID
+     * @return 用户收货地址列表
+     */
+    @Override
+    public List<UserAddress> getUserAddressList(String userId) {
+        return userAddressMapper.getUserAddressList(userId);
     }
 }
