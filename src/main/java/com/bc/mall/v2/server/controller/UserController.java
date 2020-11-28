@@ -1,5 +1,6 @@
 package com.bc.mall.v2.server.controller;
 
+import com.bc.mall.v2.server.cons.Constant;
 import com.bc.mall.v2.server.entity.UserAddress;
 import com.bc.mall.v2.server.enums.ResponseMsg;
 import com.bc.mall.v2.server.service.UserAddressService;
@@ -57,6 +58,10 @@ public class UserController {
             UserAddress userAddress = new UserAddress(userId, name, phone, province,
                     city, district, address, isDefault);
 
+            if (Constant.IS_DEFAULT_TRUE.equals(isDefault)) {
+                userAddressService.resetDefUserAddress(userId);
+            }
+
             userAddressService.addUserAddress(userAddress);
             responseEntity = new ResponseEntity<>(ResponseMsg.ADD_USER_ADDRESS_SUCCESS.getResponseCode(), HttpStatus.OK);
         } catch (Exception e) {
@@ -97,6 +102,10 @@ public class UserController {
         try {
             UserAddress userAddress = new UserAddress(addressId, userId, name, phone, province,
                     city, district, address, isDefault);
+
+            if (Constant.IS_DEFAULT_TRUE.equals(isDefault)) {
+                userAddressService.resetDefUserAddress(userId);
+            }
 
             userAddressService.updateUserAddress(userAddress);
             responseEntity = new ResponseEntity<>(ResponseMsg.UPDATE_USER_ADDRESS_SUCCESS.getResponseCode(), HttpStatus.OK);

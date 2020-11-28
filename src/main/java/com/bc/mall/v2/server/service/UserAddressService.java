@@ -40,4 +40,11 @@ public interface UserAddressService {
      */
     void deleteUserAddress(String addressId);
 
+    /**
+     * 重置用户默认收货地址(全置为非默认)
+     *
+     * @param userId 用户ID
+     */
+    void resetDefUserAddress(String userId);
+
 }

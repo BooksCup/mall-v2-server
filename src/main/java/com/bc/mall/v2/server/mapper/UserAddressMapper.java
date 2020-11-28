@@ -3,6 +3,7 @@ package com.bc.mall.v2.server.mapper;
 import com.bc.mall.v2.server.entity.UserAddress;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户收货地址
@@ -39,4 +40,11 @@ public interface UserAddressMapper {
      * @param addressId 地址ID
      */
     void deleteUserAddress(String addressId);
+
+    /**
+     * 重置用户默认收货地址(全置为非默认)
+     *
+     * @param paramMap 参数map
+     */
+    void resetDefUserAddress(Map<String, Object> paramMap);
 }

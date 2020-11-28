@@ -69,4 +69,11 @@
         is_default = #{isDefault}
         where id = #{id}
     </update>
+
+    <update id="resetDefUserAddress" parameterType="map">
+        update t_user_address
+        set
+        is_default = #{isDefault}
+        where user_id = #{userId}
+    </update>
 </mapper>

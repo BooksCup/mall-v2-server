@@ -1,12 +1,15 @@
 package com.bc.mall.v2.server.service.impl;
 
+import com.bc.mall.v2.server.cons.Constant;
 import com.bc.mall.v2.server.entity.UserAddress;
 import com.bc.mall.v2.server.mapper.UserAddressMapper;
 import com.bc.mall.v2.server.service.UserAddressService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户收货地址
@@ -58,5 +61,18 @@ public class UserAddressServiceImpl implements UserAddressService {
     @Override
     public void deleteUserAddress(String addressId) {
         userAddressMapper.deleteUserAddress(addressId);
+    }
+
+    /**
+     * 重置用户默认收货地址(全置为非默认)
+     *
+     * @param userId 用户ID
+     */
+    @Override
+    public void resetDefUserAddress(String userId) {
+        Map<String, Object> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
+        paramMap.put("userId", userId);
+        paramMap.put("isDefault", Constant.IS_DEFAULT_FALSE);
+        userAddressMapper.resetDefUserAddress(paramMap);
     }
 }
