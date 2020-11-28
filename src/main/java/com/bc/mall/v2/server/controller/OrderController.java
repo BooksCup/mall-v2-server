@@ -66,4 +66,22 @@ public class OrderController {
         return responseEntity;
 
     }
+
+    @ApiOperation(value = "根据订单ID获取订单", notes = "根据订单ID获取订单")
+    @GetMapping(value = "/{orderId}")
+    public ResponseEntity<Order> getOrderById(
+            @PathVariable String orderId) {
+        logger.info("[getOrderById] orderId: " + orderId);
+        ResponseEntity<Order> responseEntity;
+        try {
+            Order order = orderService.getOrderById(orderId);
+            responseEntity = new ResponseEntity<>(order, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("[getOrderById] error: " + e.getMessage());
+            responseEntity = new ResponseEntity<>(new Order(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+
+    }
 }

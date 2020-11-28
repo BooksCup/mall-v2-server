@@ -16,4 +16,12 @@ public interface OrderService {
      */
     void addOrder(Order order);
 
+    /**
+     * 根据订单ID获取订单
+     *
+     * @param orderId 订单ID
+     * @return 订单
+     */
+    Order getOrderById(String orderId);
+
 }

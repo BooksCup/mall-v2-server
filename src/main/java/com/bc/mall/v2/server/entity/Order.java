@@ -20,6 +20,9 @@ public class Order {
     private BigDecimal totalAmount;
     private String status;
     private String remark;
+    private String createTime;
+    private String shopName;
+    private String goodsName;
 
     public Order() {
 
@@ -115,5 +118,29 @@ public class Order {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
     }
 }

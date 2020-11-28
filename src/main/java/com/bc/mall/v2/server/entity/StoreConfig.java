@@ -10,6 +10,8 @@ public class StoreConfig {
     private String storeId;
     private String appId;
     private String appSecret;
+    private String mchId;
+    private String mchKey;
     private String wxDefaultName;
     private String wxDefaultAvatar;
 
@@ -43,6 +45,22 @@ public class StoreConfig {
 
     public void setAppSecret(String appSecret) {
         this.appSecret = appSecret;
+    }
+
+    public String getMchId() {
+        return mchId;
+    }
+
+    public void setMchId(String mchId) {
+        this.mchId = mchId;
+    }
+
+    public String getMchKey() {
+        return mchKey;
+    }
+
+    public void setMchKey(String mchKey) {
+        this.mchKey = mchKey;
     }
 
     public String getWxDefaultName() {

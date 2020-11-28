@@ -7,6 +7,8 @@
         <result column="store_id" property="storeId" jdbcType="VARCHAR"/>
         <result column="app_id" property="appId" jdbcType="VARCHAR"/>
         <result column="app_secret" property="appSecret" jdbcType="VARCHAR"/>
+        <result column="mch_id" property="mchId" jdbcType="VARCHAR"/>
+        <result column="mch_key" property="mchKey" jdbcType="VARCHAR"/>
         <result column="wx_default_name" property="wxDefaultName" jdbcType="VARCHAR"/>
         <result column="wx_default_avatar" property="wxDefaultAvatar" jdbcType="VARCHAR"/>
     </resultMap>

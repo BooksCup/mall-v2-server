@@ -14,7 +14,7 @@
         <result column="is_default" property="isDefault" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="addUserAddress" parameterType="com.bc.mall.v2.server.entity.UserAddress">
+    <insert id="addUserAddress" parameterType="com.bc.mall.v2.server.entity.UserAddress">
         insert into t_user_address
         (
         id,
@@ -41,7 +41,7 @@
         #{isDefault},
         now()
         )
-    </select>
+    </insert>
 
     <select id="getUserAddressList" parameterType="String" resultMap="userAddress">
         select

@@ -27,4 +27,15 @@ public class OrderServiceImpl implements OrderService {
     public void addOrder(Order order) {
         orderMapper.addOrder(order);
     }
+
+    /**
+     * 根据订单ID获取订单
+     *
+     * @param orderId 订单ID
+     * @return 订单
+     */
+    @Override
+    public Order getOrderById(String orderId) {
+        return orderMapper.getOrderById(orderId);
+    }
 }
