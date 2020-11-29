@@ -12,11 +12,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -75,7 +78,13 @@ public class OrderController {
 
     }
 
-    @ApiOperation(value = "根据订单ID获取订单", notes = "根据订单ID获取订单")
+    /**
+     * 根据订单ID获取订单详情
+     *
+     * @param orderId 订单ID
+     * @return ResponseEntity
+     */
+    @ApiOperation(value = "根据订单ID获取订单详情", notes = "根据订单ID获取订单详情")
     @GetMapping(value = "/{orderId}")
     public ResponseEntity<Order> getOrderById(
             @PathVariable String orderId) {
@@ -93,27 +102,32 @@ public class OrderController {
 
     }
 
-    @ApiOperation(value = "根据订单ID获取订单", notes = "根据订单ID获取订单")
-    @PutMapping(value = "/{orderId}/updateOrderAfterPay")
-    public ResponseEntity<String> updateOrderAfterPay(
-            @PathVariable String orderId) {
-        logger.info("[updateOrderAfterPay] orderId: " + orderId);
-        ResponseEntity<String> responseEntity;
+    /**
+     * 获取订单列表
+     *
+     * @param userId 用户ID
+     * @param status 订单状态
+     * @return ResponseEntity
+     */
+    @ApiOperation(value = "获取订单列表", notes = "获取订单列表")
+    @GetMapping(value = "")
+    public ResponseEntity<List<Order>> getOrderList(
+            @RequestParam String userId,
+            @RequestParam(required = false) String status) {
+        logger.info("[getOrderList] userId: " + userId + ", status: " + status);
+        ResponseEntity<List<Order>> responseEntity;
         try {
-            Map<String, String> paramMap = new HashMap<>();
-            paramMap.put("orderId", orderId);
-            // 支付状态为已支付
-            paramMap.put("payStatus", Constant.PAY_STATUS_PAID);
-            // 类型微信小程序支付
-            paramMap.put("payType", Constant.PAY_TYPE_MINI_WECHAT);
-            // 状态更新为待发货
-            paramMap.put("status", Constant.ORDER_STATUS_AWAITING_SHIPMENT);
-            orderService.updateOrderAfterPay(paramMap);
-            responseEntity = new ResponseEntity<>("", HttpStatus.OK);
+            Map<String, Object> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
+            paramMap.put("userId", userId);
+            if (!StringUtils.isEmpty(status)) {
+                paramMap.put("status", status);
+            }
+            List<Order> orderList = orderService.getOrderList(paramMap);
+            responseEntity = new ResponseEntity<>(orderList, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("[updateOrderAfterPay] error: " + e.getMessage());
-            responseEntity = new ResponseEntity<>("", HttpStatus.INTERNAL_SERVER_ERROR);
+            logger.error("[getOrderList] error: " + e.getMessage());
+            responseEntity = new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return responseEntity;
 

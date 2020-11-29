@@ -23,6 +23,7 @@ public class Order extends BaseResponse {
     private String createTime;
     private String shopName;
     private String goodsName;
+    private String sellPrice;
 
     public Order() {
 
@@ -146,5 +147,13 @@ public class Order extends BaseResponse {
 
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
+    }
+
+    public String getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(String sellPrice) {
+        this.sellPrice = sellPrice;
     }
 }

@@ -6,6 +6,7 @@ import com.bc.mall.v2.server.service.OrderService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,5 +49,16 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void updateOrderAfterPay(Map<String, String> paramMap) {
         orderMapper.updateOrderAfterPay(paramMap);
+    }
+
+    /**
+     * 获取订单列表
+     *
+     * @param paramMap 参数map
+     * @return 订单列表
+     */
+    @Override
+    public List<Order> getOrderList(Map<String, Object> paramMap) {
+        return orderMapper.getOrderList(paramMap);
     }
 }

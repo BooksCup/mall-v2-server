@@ -15,6 +15,7 @@
         <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
         <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
         <result column="shop_name" property="shopName" jdbcType="VARCHAR"/>
+        <result column="sell_price" property="sellPrice" jdbcType="VARCHAR"/>
     </resultMap>
 
     <insert id="addOrder" parameterType="com.bc.mall.v2.server.entity.Order">
@@ -66,5 +67,21 @@
         pay_time = now()
         where id = #{orderId}
     </update>
+
+    <select id="getOrderList" parameterType="String" resultMap="order">
+        select
+        o.*,
+        g.name as goods_name,
+        s.name as shop_name,
+        sku.sell_price
+        from t_order o
+        left join t_goods g on o.goods_id = g.id
+        left join t_shop s on g.shop_id = s.id
+        left join t_goods_sku sku on o.sku_id = sku.id
+        where o.user_id = #{userId}
+        <if test="status != null and status != ''">
+            and o.status = #{status}
+        </if>
+    </select>
 
 </mapper>
