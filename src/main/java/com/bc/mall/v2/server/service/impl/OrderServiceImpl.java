@@ -3,6 +3,7 @@ package com.bc.mall.v2.server.service.impl;
 import com.bc.mall.v2.server.entity.Order;
 import com.bc.mall.v2.server.mapper.OrderMapper;
 import com.bc.mall.v2.server.service.OrderService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -54,11 +55,14 @@ public class OrderServiceImpl implements OrderService {
     /**
      * 获取订单列表
      *
+     * @param pageNum  当前分页数
+     * @param pageSize 分页大小
      * @param paramMap 参数map
      * @return 订单列表
      */
     @Override
-    public List<Order> getOrderList(Map<String, Object> paramMap) {
+    public List<Order> getOrderList(int pageNum, int pageSize, Map<String, Object> paramMap) {
+        PageHelper.startPage(pageNum, pageSize);
         return orderMapper.getOrderList(paramMap);
     }
 }

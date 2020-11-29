@@ -113,7 +113,9 @@ public class OrderController {
     @GetMapping(value = "")
     public ResponseEntity<List<Order>> getOrderList(
             @RequestParam String userId,
-            @RequestParam(required = false) String status) {
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false, defaultValue = "1") Integer page,
+            @RequestParam(required = false, defaultValue = "10") Integer limit) {
         logger.info("[getOrderList] userId: " + userId + ", status: " + status);
         ResponseEntity<List<Order>> responseEntity;
         try {
@@ -122,7 +124,7 @@ public class OrderController {
             if (!StringUtils.isEmpty(status)) {
                 paramMap.put("status", status);
             }
-            List<Order> orderList = orderService.getOrderList(paramMap);
+            List<Order> orderList = orderService.getOrderList(page, limit, paramMap);
             responseEntity = new ResponseEntity<>(orderList, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

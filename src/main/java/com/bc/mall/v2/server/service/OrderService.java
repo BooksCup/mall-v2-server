@@ -37,9 +37,11 @@ public interface OrderService {
     /**
      * 获取订单列表
      *
+     * @param pageNum  当前分页数
+     * @param pageSize 分页大小
      * @param paramMap 参数map
      * @return 订单列表
      */
-    List<Order> getOrderList(Map<String, Object> paramMap);
+    List<Order> getOrderList(int pageNum, int pageSize, Map<String, Object> paramMap);
 
 }
