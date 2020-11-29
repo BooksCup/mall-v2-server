@@ -25,6 +25,7 @@ public class Order extends BaseResponse {
     private String goodsName;
     private String sellPrice;
     private String skuImage;
+    private String sharerId;
 
     public Order() {
 
@@ -35,7 +36,7 @@ public class Order extends BaseResponse {
     }
 
     public Order(String storeId, String userId, String goodsId, String skuId,
-                 String addressId, Integer number, String remark) {
+                 String addressId, Integer number, String remark, String sharerId) {
         this.id = CommonUtil.generateId();
         this.storeId = storeId;
         this.userId = userId;
@@ -44,6 +45,7 @@ public class Order extends BaseResponse {
         this.addressId = addressId;
         this.number = number;
         this.remark = remark;
+        this.sharerId = sharerId;
     }
 
     public String getId() {
@@ -164,6 +166,14 @@ public class Order extends BaseResponse {
 
     public void setSkuImage(String skuImage) {
         this.skuImage = skuImage;
+    }
+
+    public String getSharerId() {
+        return sharerId;
+    }
+
+    public void setSharerId(String sharerId) {
+        this.sharerId = sharerId;
     }
 }
 

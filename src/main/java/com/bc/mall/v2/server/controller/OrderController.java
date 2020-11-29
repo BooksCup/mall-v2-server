@@ -39,6 +39,19 @@ public class OrderController {
     @Resource
     private GoodsSkuService goodsSkuService;
 
+    /**
+     * 生成订单
+     *
+     * @param storeId   商城ID
+     * @param userId    用户ID
+     * @param goodsId   商品ID
+     * @param skuId     SKU ID
+     * @param addressId 地址ID
+     * @param number    订单数量
+     * @param remark    订单备注
+     * @param sharerId  分享者ID
+     * @return ResponseEntity
+     */
     @ApiOperation(value = "生成订单", notes = "生成订单")
     @PostMapping(value = "")
     public ResponseEntity<Order> addOrder(
@@ -48,10 +61,11 @@ public class OrderController {
             @RequestParam String skuId,
             @RequestParam String addressId,
             @RequestParam Integer number,
-            @RequestParam String remark) {
+            @RequestParam String remark,
+            @RequestParam(required = false) String sharerId) {
         ResponseEntity<Order> responseEntity;
         try {
-            Order order = new Order(storeId, userId, goodsId, skuId, addressId, number, remark);
+            Order order = new Order(storeId, userId, goodsId, skuId, addressId, number, remark, sharerId);
 
             // 计算总价
             GoodsSku goodsSku = goodsSkuService.getGoodsSkuBySkuId(skuId);
