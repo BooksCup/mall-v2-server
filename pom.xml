@@ -9,7 +9,7 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>mall-server</name>
+    <name>mall-v2-server</name>
     <description>商城服务端(v2)</description>
 
     <parent>

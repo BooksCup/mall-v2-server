@@ -24,6 +24,7 @@ public class Order extends BaseResponse {
     private String shopName;
     private String goodsName;
     private String sellPrice;
+    private String skuImage;
 
     public Order() {
 
@@ -156,4 +157,13 @@ public class Order extends BaseResponse {
     public void setSellPrice(String sellPrice) {
         this.sellPrice = sellPrice;
     }
+
+    public String getSkuImage() {
+        return skuImage;
+    }
+
+    public void setSkuImage(String skuImage) {
+        this.skuImage = skuImage;
+    }
 }
+
