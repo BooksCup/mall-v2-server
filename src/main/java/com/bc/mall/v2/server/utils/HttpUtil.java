@@ -1,5 +1,6 @@
 package com.bc.mall.v2.server.utils;
 
+import com.bc.mall.v2.server.cons.Constant;
 import org.apache.http.*;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -16,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.URI;
 import java.net.URL;
@@ -154,7 +156,14 @@ public class HttpUtil {
         return null;
     }
 
-
+    /**
+     * 发送HTTP请求
+     *
+     * @param requestUrl    请求URL
+     * @param requestMethod 请求方法
+     * @param output        输出
+     * @return 服务器返回
+     */
     public static String httpsRequest(String requestUrl, String requestMethod, String output) {
         try {
             URL url = new URL(requestUrl);
@@ -186,5 +195,30 @@ public class HttpUtil {
             ex.printStackTrace();
         }
         return "";
+    }
+
+    /**
+     * 获取IP地址
+     *
+     * @param request 请求
+     * @return IP地址
+     */
+    public static String getIp(HttpServletRequest request) {
+        // 获取请求ip地址
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || Constant.IP_UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || Constant.IP_UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || Constant.IP_UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        if (ip.indexOf(Constant.SYMBOL_COMMA) != -1) {
+            String[] ips = ip.split(Constant.SYMBOL_COMMA);
+            ip = ips[0].trim();
+        }
+        return ip;
     }
 }

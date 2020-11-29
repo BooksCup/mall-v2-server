@@ -22,6 +22,11 @@ import java.security.SecureRandom;
 import java.util.*;
 
 
+/**
+ * 微信支付工具类
+ *
+ * @author zhou
+ */
 public class WxPayUtil {
 
     private static final String SYMBOLS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -29,22 +34,22 @@ public class WxPayUtil {
     private static final Random RANDOM = new SecureRandom();
 
     /**
-     * XML格式字符串转换为Map
+     * xml格式字符串转换为map
      *
-     * @param strXML XML字符串
-     * @return XML数据转换后的Map
+     * @param xml xml字符串
+     * @return xml数据转换后的map
      * @throws Exception
      */
-    public static Map<String, String> xmlToMap(String strXML) throws Exception {
+    public static Map<String, String> xmlToMap(String xml) throws Exception {
         try {
             Map<String, String> data = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
             DocumentBuilder documentBuilder = WxPayXmlUtil.newDocumentBuilder();
-            InputStream stream = new ByteArrayInputStream(strXML.getBytes("UTF-8"));
+            InputStream stream = new ByteArrayInputStream(xml.getBytes("UTF-8"));
             org.w3c.dom.Document doc = documentBuilder.parse(stream);
             doc.getDocumentElement().normalize();
             NodeList nodeList = doc.getDocumentElement().getChildNodes();
-            for (int idx = 0; idx < nodeList.getLength(); ++idx) {
-                Node node = nodeList.item(idx);
+            for (int i = 0; i < nodeList.getLength(); ++i) {
+                Node node = nodeList.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     org.w3c.dom.Element element = (org.w3c.dom.Element) node;
                     data.put(element.getNodeName(), element.getTextContent());
@@ -57,17 +62,17 @@ public class WxPayUtil {
             }
             return data;
         } catch (Exception ex) {
-            WxPayUtil.getLogger().warn("Invalid XML, can not convert to map. Error message: {}. XML content: {}", ex.getMessage(), strXML);
+            WxPayUtil.getLogger().warn("Invalid XML, can not convert to map. Error message: {}. XML content: {}", ex.getMessage(), xml);
             throw ex;
         }
 
     }
 
     /**
-     * 将Map转换为XML格式的字符串
+     * map转换为xml格式的字符串
      *
-     * @param data Map类型数据
-     * @return XML格式的字符串
+     * @param data map类型数据
+     * @return xml格式的字符串
      * @throws Exception
      */
     public static String mapToXml(Map<String, String> data) throws Exception {
@@ -102,7 +107,7 @@ public class WxPayUtil {
 
 
     /**
-     * 生成带有 sign 的 XML 格式字符串
+     * 生成带有sign的xml格式字符串
      *
      * @param data Map类型数据
      * @param key  API密钥
@@ -113,9 +118,9 @@ public class WxPayUtil {
     }
 
     /**
-     * 生成带有 sign 的 XML 格式字符串
+     * 生成带有sign的xml格式字符串
      *
-     * @param data     Map类型数据
+     * @param data     map类型数据
      * @param key      API密钥
      * @param signType 签名类型
      * @return 含有sign字段的XML

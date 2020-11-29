@@ -41,6 +41,14 @@ public class PayController {
     @Resource
     private StoreConfigService storeConfigService;
 
+    /**
+     * 微信支付
+     *
+     * @param orderId 订单ID
+     * @param storeId 商城ID
+     * @param request 请求
+     * @return ResponseEntity
+     */
     @ApiOperation(value = "微信支付", notes = "微信支付")
     @PostMapping(value = "")
     public ResponseEntity<WechatPrepayParam> wechatPay(@RequestParam String orderId,
@@ -53,7 +61,6 @@ public class PayController {
             String openId = request.getHeader("openid");
 
             if (StringUtils.isEmpty(openId)) {
-                logger.info("openid为空");
                 return new ResponseEntity<>(new WechatPrepayParam(
                         ResponseMsg.OPEN_ID_EMPTY.getResponseCode(),
                         ResponseMsg.OPEN_ID_EMPTY.getResponseMessage()), HttpStatus.BAD_REQUEST);
@@ -70,20 +77,7 @@ public class PayController {
             // 拼接统一下单地址参数
             Map<String, String> paraMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
             // 获取请求ip地址
-            String ip = request.getHeader("x-forwarded-for");
-            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-                ip = request.getHeader("Proxy-Client-IP");
-            }
-            if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-                ip = request.getHeader("WL-Proxy-Client-IP");
-            }
-            if (ip == null || ip.length() == 0 || "unk nown".equalsIgnoreCase(ip)) {
-                ip = request.getRemoteAddr();
-            }
-            if (ip.indexOf(",") != -1) {
-                String[] ips = ip.split(",");
-                ip = ips[0].trim();
-            }
+            String ip = HttpUtil.getIp(request);
             logger.info("[wechatPay], ip: " + ip);
             // 通过订单id获取支付金额
             Order order = orderService.getOrderById(orderId);
@@ -95,7 +89,7 @@ public class PayController {
             logger.info("[wechatPay], 商家名称：" + body);
             // 商家平台ID
             paraMap.put("appid", storeConfig.getAppId());
-            // 商家名称-销售商品类目、String(128)
+            // 商家名称-销售商品类目
             paraMap.put("body", body);
             // 商户ID
             paraMap.put("mch_id", storeConfig.getMchId());
@@ -128,7 +122,7 @@ public class PayController {
             // 以下内容是返回前端页面的json数据
             // 预支付id
             String prepayId = "";
-            if (xmlStr.indexOf("SUCCESS") != -1) {
+            if (xmlStr.indexOf(Constant.SUCCESS) != -1) {
                 Map<String, String> map = WxPayUtil.xmlToMap(xmlStr);
                 prepayId = map.get("prepay_id");
             }
@@ -156,16 +150,16 @@ public class PayController {
     }
 
     /**
-     * 去除多余的小数点
+     * 去除小数位
      *
-     * @param s
-     * @return
+     * @param s 待处理字符串
+     * @return 去除小数位的字符串
      */
     private String removeZeroAndDot(String s) {
         if (s.isEmpty()) {
             return null;
         }
-        if (s.indexOf(".") > 0) {
+        if (s.indexOf(Constant.SYMBOL_DOT) > 0) {
             // 去掉多余的0
             s = s.replaceAll("0+?$", "");
             // 如最后一位是.则去掉
