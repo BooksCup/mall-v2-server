@@ -3,6 +3,8 @@ package com.bc.mall.v2.server.controller;
 import com.bc.mall.v2.server.cons.Constant;
 import com.bc.mall.v2.server.entity.Order;
 import com.bc.mall.v2.server.entity.StoreConfig;
+import com.bc.mall.v2.server.entity.pay.WechatPrepayParam;
+import com.bc.mall.v2.server.enums.ResponseMsg;
 import com.bc.mall.v2.server.service.OrderService;
 import com.bc.mall.v2.server.service.StoreConfigService;
 import com.bc.mall.v2.server.utils.BigDecimalUtil;
@@ -39,18 +41,12 @@ public class PayController {
     @Resource
     private StoreConfigService storeConfigService;
 
-    /**
-     * @param request
-     * @param
-     * @return Map
-     * @Description 微信浏览器内微信支付/公众号支付(JSAPI)
-     */
     @ApiOperation(value = "微信支付", notes = "微信支付")
     @PostMapping(value = "")
-    public ResponseEntity<Map<String, String>> wechatPay(@PathVariable String orderId,
-                                                         @RequestParam String storeId,
-                                                         HttpServletRequest request) {
-        ResponseEntity<Map<String, String>> responseEntity;
+    public ResponseEntity<WechatPrepayParam> wechatPay(@RequestParam String orderId,
+                                                       @RequestParam String storeId,
+                                                       HttpServletRequest request) {
+        ResponseEntity<WechatPrepayParam> responseEntity;
         try {
 
             logger.info("[wechatPay], orderId: " + orderId);
@@ -58,13 +54,16 @@ public class PayController {
 
             if (StringUtils.isEmpty(openId)) {
                 logger.info("openid为空");
-                return null;
+                return new ResponseEntity<>(new WechatPrepayParam(
+                        ResponseMsg.OPEN_ID_EMPTY.getResponseCode(),
+                        ResponseMsg.OPEN_ID_EMPTY.getResponseMessage()), HttpStatus.BAD_REQUEST);
             }
 
             StoreConfig storeConfig = storeConfigService.getStoreConfigByStoreId(storeId);
             if (null == storeConfig) {
-                logger.info("storeConfig有问题");
-                return null;
+                return new ResponseEntity<>(new WechatPrepayParam(
+                        ResponseMsg.STORE_CONFIG_EMPTY.getResponseCode(),
+                        ResponseMsg.STORE_CONFIG_EMPTY.getResponseMessage()), HttpStatus.BAD_REQUEST);
             }
 
             logger.info("[wechatPay], openId: " + openId);
@@ -143,10 +142,15 @@ public class PayController {
             String paySign = WxPayUtil.generateSignature(payMap, storeConfig.getMchKey());
             payMap.put("paySign", paySign);
             // 参数传给前端
-            responseEntity = new ResponseEntity<>(payMap, HttpStatus.OK);
+            WechatPrepayParam wechatPrepayParam = new WechatPrepayParam(
+                    ResponseMsg.GENERATE_PRE_PAY_PARAM_SUCCESS.getResponseCode(),
+                    ResponseMsg.GENERATE_PRE_PAY_PARAM_SUCCESS.getResponseMessage(), payMap);
+            responseEntity = new ResponseEntity<>(wechatPrepayParam, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            responseEntity = new ResponseEntity<>(new HashMap<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+            responseEntity = new ResponseEntity<>(new WechatPrepayParam(
+                    ResponseMsg.SERVER_ERROR.getResponseCode(),
+                    ResponseMsg.SERVER_ERROR.getResponseMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return responseEntity;
     }

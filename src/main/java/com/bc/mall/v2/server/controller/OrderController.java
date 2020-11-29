@@ -35,7 +35,7 @@ public class OrderController {
 
     @ApiOperation(value = "生成订单", notes = "生成订单")
     @PostMapping(value = "")
-    public ResponseEntity<String> addOrder(
+    public ResponseEntity<Order> addOrder(
             @RequestParam String storeId,
             @RequestParam String userId,
             @RequestParam String goodsId,
@@ -43,25 +43,30 @@ public class OrderController {
             @RequestParam String addressId,
             @RequestParam Integer number,
             @RequestParam String remark) {
-        ResponseEntity<String> responseEntity;
+        ResponseEntity<Order> responseEntity;
         try {
             Order order = new Order(storeId, userId, goodsId, skuId, addressId, number, remark);
 
             // 计算总价
             GoodsSku goodsSku = goodsSkuService.getGoodsSkuBySkuId(skuId);
             if (null == goodsSku) {
-                return new ResponseEntity<>(ResponseMsg.GOODS_SKU_NOT_EXISTS.getResponseCode(), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new Order(
+                        ResponseMsg.GOODS_SKU_NOT_EXISTS.getResponseCode(),
+                        ResponseMsg.GOODS_SKU_NOT_EXISTS.getResponseMessage()), HttpStatus.BAD_REQUEST);
             } else {
                 BigDecimal totalAmount = BigDecimalUtil.multiply(goodsSku.getSellPrice(), number);
                 order.setTotalAmount(totalAmount);
             }
-
             orderService.addOrder(order);
-            responseEntity = new ResponseEntity<>(ResponseMsg.ADD_ORDER_SUCCESS.getResponseCode(), HttpStatus.OK);
+            order.setResponseCode(ResponseMsg.ADD_ORDER_SUCCESS.getResponseCode());
+            order.setResponseMessage(ResponseMsg.ADD_ORDER_SUCCESS.getResponseMessage());
+            responseEntity = new ResponseEntity<>(order, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("[addOrder] error: " + e.getMessage());
-            responseEntity = new ResponseEntity<>(ResponseMsg.ADD_ORDER_ERROR.getResponseCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+            responseEntity = new ResponseEntity<>(new Order(
+                    ResponseMsg.SERVER_ERROR.getResponseCode(),
+                    ResponseMsg.SERVER_ERROR.getResponseMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return responseEntity;
 

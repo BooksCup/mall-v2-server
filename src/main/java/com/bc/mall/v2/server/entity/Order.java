@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  *
  * @author zhou
  */
-public class Order {
+public class Order extends BaseResponse {
     private String id;
     private String storeId;
     private String userId;
@@ -26,6 +26,10 @@ public class Order {
 
     public Order() {
 
+    }
+
+    public Order(String responseCode, String responseMessage) {
+        super(responseCode, responseMessage);
     }
 
     public Order(String storeId, String userId, String goodsId, String skuId,

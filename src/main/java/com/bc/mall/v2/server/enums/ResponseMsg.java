@@ -27,9 +27,12 @@ public enum ResponseMsg {
     DELETE_USER_ADDRESS_ERROR("DELETE_USER_ADDRESS_ERROR", "删除收货地址失败!"),
 
     ADD_ORDER_SUCCESS("ADD_ORDER_SUCCESS", "新增订单成功!"),
-    ADD_ORDER_ERROR("ADD_ORDER_ERROR", "新增订单失败!"),
 
-    GOODS_SKU_NOT_EXISTS("GOODS_SKU_NOT_EXISTS", "该账号已存在!"),
+    GOODS_SKU_NOT_EXISTS("GOODS_SKU_NOT_EXISTS", "商品SKU不存在!"),
+    SERVER_ERROR("SERVER_ERROR", "网络繁忙!"),
+    GENERATE_PRE_PAY_PARAM_SUCCESS("GENERATE_PRE_PAY_PARAM_SUCCESS", "预支付参数生成成功!"),
+
+    OPEN_ID_EMPTY("OPEN_ID_EMPTY", "openid为空!"),
     ;
 
     ResponseMsg(String responseCode, String responseMessage) {
