@@ -41,4 +41,15 @@ public class GoodsSkuServiceImpl implements GoodsSkuService {
         return goodsSkuMapper.getGoodsSkuListByGoodsId(paramMap);
     }
 
+    /**
+     * 获取商品默认规格(用于商品详情页规格模块的加载)
+     *
+     * @param goodsId 商品ID
+     * @return 商品默认规格
+     */
+    @Override
+    public GoodsSku getGoodsDefSku(String goodsId) {
+        return goodsSkuMapper.getGoodsDefSku(goodsId);
+    }
+
 }

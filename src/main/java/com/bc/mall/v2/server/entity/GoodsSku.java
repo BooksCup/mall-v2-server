@@ -20,6 +20,9 @@ public class GoodsSku {
     private String unit;
     private String attr;
 
+    private String minSellPrice;
+    private String maxSellPrice;
+
     public GoodsSku() {
 
     }
@@ -126,5 +129,21 @@ public class GoodsSku {
 
     public void setAttr(String attr) {
         this.attr = attr;
+    }
+
+    public String getMinSellPrice() {
+        return minSellPrice;
+    }
+
+    public void setMinSellPrice(String minSellPrice) {
+        this.minSellPrice = minSellPrice;
+    }
+
+    public String getMaxSellPrice() {
+        return maxSellPrice;
+    }
+
+    public void setMaxSellPrice(String maxSellPrice) {
+        this.maxSellPrice = maxSellPrice;
     }
 }

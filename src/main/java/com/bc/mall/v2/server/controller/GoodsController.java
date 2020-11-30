@@ -65,6 +65,15 @@ public class GoodsController {
             List<GoodsSku> goodsSkuList = goodsSkuService.getGoodsSkuListByGoodsId(paramMap);
             goods.setGoodsSkuList(goodsSkuList);
 
+            // 默认商品SKU,eg:默认价格,库存,图片etc.
+            GoodsSku defGoodsSku = goodsSkuService.getGoodsDefSku(goodsId);
+            if (null != defGoodsSku.getMaxSellPrice() &&
+                    defGoodsSku.getMaxSellPrice().equals(defGoodsSku.getMinSellPrice())) {
+                goods.setSellPrice(defGoodsSku.getMaxSellPrice());
+            } else {
+                goods.setSellPrice(defGoodsSku.getMinSellPrice() + "-" + defGoodsSku.getMaxSellPrice());
+            }
+
             responseEntity = new ResponseEntity<>(goods, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

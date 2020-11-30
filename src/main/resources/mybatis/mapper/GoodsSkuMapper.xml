@@ -2,6 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bc.mall.v2.server.mapper.GoodsSkuMapper">
 
+    <resultMap id="defGoodsSku" type="com.bc.mall.v2.server.entity.GoodsSku">
+        <result column="minSellPrice" property="minSellPrice" jdbcType="VARCHAR"/>
+        <result column="maxSellPrice" property="maxSellPrice" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <resultMap id="goodsSku" type="com.bc.mall.v2.server.entity.GoodsSku">
         <id column="id" property="id" jdbcType="VARCHAR"/>
         <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
@@ -53,6 +58,14 @@
         from t_goods_sku
         where
         goods_id = #{goodsId}
+    </select>
+
+    <select id="getGoodsDefSku" parameterType="String" resultMap="defGoodsSku">
+        select
+        min(sell_price) as minSellPrice,
+        max(sell_price) as maxSellPrice
+        from t_goods_sku
+        where goods_id = #{goodsId}
     </select>
 
 </mapper>
