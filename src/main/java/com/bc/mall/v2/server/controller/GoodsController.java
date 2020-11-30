@@ -61,6 +61,10 @@ public class GoodsController {
             List<GoodsImage> goodsImageList = goodsService.getGoodsImageListByGoodsId(paramMap);
             goods.setGoodsImageList(goodsImageList);
 
+            // 商品SKU
+            List<GoodsSku> goodsSkuList = goodsSkuService.getGoodsSkuListByGoodsId(paramMap);
+            goods.setGoodsSkuList(goodsSkuList);
+
             responseEntity = new ResponseEntity<>(goods, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

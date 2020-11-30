@@ -6,6 +6,8 @@ import com.bc.mall.v2.server.service.GoodsSkuService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 商品SKU
@@ -27,4 +29,16 @@ public class GoodsSkuServiceImpl implements GoodsSkuService {
     public void addGoodsSku(GoodsSku goodsSku) {
         goodsSkuMapper.addGoodsSku(goodsSku);
     }
+
+    /**
+     * 获取商品SKU列表
+     *
+     * @param paramMap 参数map
+     * @return 商品SKU列表
+     */
+    @Override
+    public List<GoodsSku> getGoodsSkuListByGoodsId(Map<String, Object> paramMap) {
+        return goodsSkuMapper.getGoodsSkuListByGoodsId(paramMap);
+    }
+
 }

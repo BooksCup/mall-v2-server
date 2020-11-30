@@ -16,6 +16,7 @@ public class Goods {
     private Integer salesVolume;
     private List<GoodsLabel> goodsLabelList;
     private List<GoodsImage> goodsImageList;
+    private List<GoodsSku> goodsSkuList;
 
     public String getId() {
         return id;
@@ -79,5 +80,13 @@ public class Goods {
 
     public void setGoodsImageList(List<GoodsImage> goodsImageList) {
         this.goodsImageList = goodsImageList;
+    }
+
+    public List<GoodsSku> getGoodsSkuList() {
+        return goodsSkuList;
+    }
+
+    public void setGoodsSkuList(List<GoodsSku> goodsSkuList) {
+        this.goodsSkuList = goodsSkuList;
     }
 }

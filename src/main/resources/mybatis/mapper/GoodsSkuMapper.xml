@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bc.mall.v2.server.mapper.GoodsSkuMapper">
+
+    <resultMap id="goodsSku" type="com.bc.mall.v2.server.entity.GoodsSku">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
+        <result column="cost_price" property="costPrice"/>
+        <result column="sell_price" property="sellPrice"/>
+        <result column="orig_price" property="origPrice"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="totalStock" property="total_stock" jdbcType="INTEGER"/>
+        <result column="remainStock" property="remain_stock" jdbcType="INTEGER"/>
+        <result column="warnStock" property="warn_stock" jdbcType="INTEGER"/>
+        <result column="unit" property="unit" jdbcType="VARCHAR"/>
+        <result column="attr" property="attr" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <insert id="addGoodsSku" parameterType="com.bc.mall.v2.server.entity.GoodsSku">
         insert into t_goods_sku
         (
@@ -31,5 +46,13 @@
         #{warnStock}
         )
     </insert>
+
+    <select id="getGoodsSkuListByGoodsId" parameterType="map" resultMap="goodsSku">
+        select
+        *
+        from t_goods_sku
+        where
+        goods_id = #{goodsId}
+    </select>
 
 </mapper>
