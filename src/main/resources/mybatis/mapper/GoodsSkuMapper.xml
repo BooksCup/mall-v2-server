@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bc.mall.v2.server.mapper.GoodsSkuMapper">
+    <insert id="addGoodsSku" parameterType="com.bc.mall.v2.server.entity.GoodsSku">
+        insert into t_goods_sku
+        (
+        id,
+        goods_id,
+        cost_price,
+        sell_price,
+        orig_price,
+        image,
+        total_stock,
+        remain_stock,
+        unit,
+        attr,
+        warn_stock
+        )
+        values
+        (
+        #{id},
+        #{goodsId},
+        #{costPrice},
+        #{sellPrice},
+        #{origPrice},
+        #{image},
+        #{totalStock},
+        #{remainStock},
+        #{unit},
+        #{attr},
+        #{warnStock}
+        )
+    </insert>
+
+</mapper>
