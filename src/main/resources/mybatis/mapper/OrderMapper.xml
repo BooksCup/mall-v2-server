@@ -16,10 +16,30 @@
         <result column="total_price" property="totalPrice" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="getOrderListForAdmin" parameterType="map" resultMap="order">
-        select
-        *
-        from t_mall_order
-        order by create_time desc
-    </select>
+    <insert id="addOrder" parameterType="com.bc.mall.v2.server.entity.Order">
+        insert into t_order
+        (
+        id,
+        store_id,
+        user_id,
+        goods_id,
+        sku_id,
+        address_id,
+        number,
+        remark,
+        create_time
+        )
+        values
+        (
+        #{id},
+        #{storeId},
+        #{userId},
+        #{goodsId},
+        #{skuId},
+        #{addressId},
+        #{number},
+        #{remark},
+        now()
+        )
+    </insert>
 </mapper>

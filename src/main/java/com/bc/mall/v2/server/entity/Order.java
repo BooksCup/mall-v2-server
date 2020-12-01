@@ -1,5 +1,9 @@
 package com.bc.mall.v2.server.entity;
 
+import com.bc.mall.v2.server.utils.CommonUtil;
+
+import java.math.BigDecimal;
+
 /**
  * 订单
  *
@@ -7,17 +11,31 @@ package com.bc.mall.v2.server.entity;
  */
 public class Order {
     private String id;
-    private String storeName;
-    private String goodsName;
-    private String goodsPrice;
-    private String createTime;
-    private String goodsNumber;
-    private String userName;
-    private String phone;
-    private String address;
-    private String freight;
-    private String payStatus;
-    private String totalPrice;
+    private String storeId;
+    private String userId;
+    private String goodsId;
+    private String skuId;
+    private String addressId;
+    private Integer number;
+    private BigDecimal totalAmount;
+    private String status;
+    private String remark;
+
+    public Order() {
+
+    }
+
+    public Order(String storeId, String userId, String goodsId, String skuId,
+                 String addressId, Integer number, String remark) {
+        this.id = CommonUtil.generateId();
+        this.storeId = storeId;
+        this.userId = userId;
+        this.goodsId = goodsId;
+        this.skuId = skuId;
+        this.addressId = addressId;
+        this.number = number;
+        this.remark = remark;
+    }
 
     public String getId() {
         return id;
@@ -27,91 +45,75 @@ public class Order {
         this.id = id;
     }
 
-    public String getStoreName() {
-        return storeName;
+    public String getStoreId() {
+        return storeId;
     }
 
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
     }
 
-    public String getGoodsName() {
-        return goodsName;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getGoodsPrice() {
-        return goodsPrice;
+    public String getGoodsId() {
+        return goodsId;
     }
 
-    public void setGoodsPrice(String goodsPrice) {
-        this.goodsPrice = goodsPrice;
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
     }
 
-    public String getCreateTime() {
-        return createTime;
+    public String getSkuId() {
+        return skuId;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setSkuId(String skuId) {
+        this.skuId = skuId;
     }
 
-    public String getGoodsNumber() {
-        return goodsNumber;
+    public String getAddressId() {
+        return addressId;
     }
 
-    public void setGoodsNumber(String goodsNumber) {
-        this.goodsNumber = goodsNumber;
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
     }
 
-    public String getUserName() {
-        return userName;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
-    public String getPhone() {
-        return phone;
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStatus() {
+        return status;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getFreight() {
-        return freight;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setFreight(String freight) {
-        this.freight = freight;
-    }
-
-    public String getPayStatus() {
-        return payStatus;
-    }
-
-    public void setPayStatus(String payStatus) {
-        this.payStatus = payStatus;
-    }
-
-    public String getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(String totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

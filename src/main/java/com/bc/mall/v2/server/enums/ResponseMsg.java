@@ -21,6 +21,9 @@ public enum ResponseMsg {
 
     DELETE_USER_ADDRESS_SUCCESS("DELETE_USER_ADDRESS_SUCCESS", "删除收货地址成功!"),
     DELETE_USER_ADDRESS_ERROR("DELETE_USER_ADDRESS_ERROR", "删除收货地址失败!"),
+
+    ADD_ORDER_SUCCESS("ADD_ORDER_SUCCESS", "新增订单成功!"),
+    ADD_ORDER_ERROR("ADD_ORDER_ERROR", "新增订单失败!"),
     ;
 
     ResponseMsg(String responseCode, String responseMessage) {
