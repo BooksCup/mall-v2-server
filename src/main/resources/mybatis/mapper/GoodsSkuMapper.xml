@@ -14,9 +14,9 @@
         <result column="sell_price" property="sellPrice"/>
         <result column="orig_price" property="origPrice"/>
         <result column="image" property="image" jdbcType="VARCHAR"/>
-        <result column="totalStock" property="total_stock" jdbcType="INTEGER"/>
-        <result column="remainStock" property="remain_stock" jdbcType="INTEGER"/>
-        <result column="warnStock" property="warn_stock" jdbcType="INTEGER"/>
+        <result column="total_stock" property="totalStock" jdbcType="INTEGER"/>
+        <result column="remain_stock" property="remainStock" jdbcType="INTEGER"/>
+        <result column="warn_stock" property="warnStock" jdbcType="INTEGER"/>
         <result column="unit" property="unit" jdbcType="VARCHAR"/>
         <result column="attr" property="attr" jdbcType="VARCHAR"/>
     </resultMap>
