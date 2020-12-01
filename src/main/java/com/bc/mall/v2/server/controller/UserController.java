@@ -1,9 +1,14 @@
 package com.bc.mall.v2.server.controller;
 
 import com.bc.mall.v2.server.cons.Constant;
+import com.bc.mall.v2.server.entity.StoreConfig;
+import com.bc.mall.v2.server.entity.User;
 import com.bc.mall.v2.server.entity.UserAddress;
 import com.bc.mall.v2.server.enums.ResponseMsg;
+import com.bc.mall.v2.server.service.StoreConfigService;
 import com.bc.mall.v2.server.service.UserAddressService;
+import com.bc.mall.v2.server.service.UserService;
+import com.bc.mall.v2.server.utils.WechatUtil;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户
@@ -28,6 +35,12 @@ public class UserController {
 
     @Resource
     private UserAddressService userAddressService;
+
+    @Resource
+    private StoreConfigService storeConfigService;
+
+    @Resource
+    private UserService userService;
 
     /**
      * 新增用户收货地址
@@ -158,6 +171,71 @@ public class UserController {
             e.printStackTrace();
             logger.error("[deleteUserAddress] error: " + e.getMessage());
             responseEntity = new ResponseEntity<>(ResponseMsg.DELETE_USER_ADDRESS_ERROR.getResponseCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+    }
+
+    /**
+     * 绑定微信用户
+     *
+     * @param storeId   店铺ID
+     * @param storeType 店铺类型
+     * @param code      登录凭证
+     * @param nickName  昵称
+     * @param avatar    头像
+     * @param sex       性别
+     * @return ResponseEntity
+     */
+    @ApiOperation(value = "绑定微信用户", notes = "绑定微信用户")
+    @PostMapping(value = "/bindWechatUser")
+    public ResponseEntity<User> bindWechatUser(
+            @RequestParam String storeId,
+            @RequestParam String storeType,
+            @RequestParam String code,
+            @RequestParam String nickName,
+            @RequestParam String avatar,
+            @RequestParam String sex) {
+        logger.info("[bindWechatUser] storeId: " + storeId + ", storeType: " + storeType + ", code: " + code
+                + ", nickName: " + nickName + ", avatar: " + avatar + ", sex: " + sex);
+        ResponseEntity<User> responseEntity;
+        try {
+            StoreConfig storeConfig = storeConfigService.getStoreConfigByStoreId(storeId);
+            if (null == storeConfig) {
+                return new ResponseEntity<>(
+                        new User(ResponseMsg.STORE_CONFIG_EMPTY.getResponseCode(),
+                                ResponseMsg.STORE_CONFIG_EMPTY.getResponseMessage()),
+                        HttpStatus.BAD_REQUEST);
+            }
+            User wxUserInfo = WechatUtil.getWechatUserInfo(storeConfig.getAppId(), storeConfig.getAppSecret(), code);
+            if (null == wxUserInfo) {
+                return new ResponseEntity<>(
+                        new User(ResponseMsg.STORE_CONFIG_NOT_CORRECT.getResponseCode(),
+                                ResponseMsg.STORE_CONFIG_NOT_CORRECT.getResponseMessage()),
+                        HttpStatus.BAD_REQUEST);
+            }
+
+            Map<String, String> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
+            paramMap.put("storeId", storeId);
+            paramMap.put("openid", wxUserInfo.getWxOpenid());
+            User user = userService.getUserByOpenId(paramMap);
+            if (null == user) {
+                // 不存在,插入
+                user = new User(storeId, nickName, avatar, sex, storeType);
+                user.setWxOpenid(wxUserInfo.getWxOpenid());
+                userService.addUserByWechatAuth(user);
+            } else {
+                // 存在,修改
+                user.setUserName(nickName);
+                user.setAvatar(avatar);
+                user.setSex(sex);
+                userService.updateUserByWechatAuth(user);
+            }
+            user.setResponseCode(ResponseMsg.BIND_WECHAT_USER_SUCCESS.getResponseCode());
+            responseEntity = new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("[bindWechatUser] error: " + e.getMessage());
+            responseEntity = new ResponseEntity<>(new User(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return responseEntity;
     }

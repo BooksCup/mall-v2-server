@@ -10,6 +10,10 @@ public enum ResponseMsg {
     /**
      * mall-server接口返回信息
      */
+    STORE_CONFIG_EMPTY("STORE_CONFIG_ERROR", "请商城管理员填写基础配置!"),
+    STORE_CONFIG_NOT_CORRECT("STORE_CONFIG_NOT_CORRECT", "授权配置错误!"),
+    BIND_WECHAT_USER_SUCCESS("BIND_WECHAT_USER_SUCCESS", "微信用户绑定成功!"),
+
     ADD_GOODS_SKU_SUCCESS("ADD_GOODS_SKU_SUCCESS", "新增商品SKU成功!"),
     ADD_GOODS_SKU_ERROR("ADD_GOODS_SKU_ERROR", "新增商品SKU失败!"),
 

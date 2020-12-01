@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bc.mall.v2.server.mapper.StoreConfigMapper">
+
+    <resultMap id="storeConfig" type="com.bc.mall.v2.server.entity.StoreConfig">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="store_id" property="storeId" jdbcType="VARCHAR"/>
+        <result column="app_id" property="appId" jdbcType="VARCHAR"/>
+        <result column="app_secret" property="appSecret" jdbcType="VARCHAR"/>
+        <result column="wx_default_name" property="wxDefaultName" jdbcType="VARCHAR"/>
+        <result column="wx_default_avatar" property="wxDefaultAvatar" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getStoreConfigListByStoreId" parameterType="String" resultMap="storeConfig">
+        select
+        *
+        from t_store_config
+        where store_id = #{storeId}
+    </select>
+</mapper>
