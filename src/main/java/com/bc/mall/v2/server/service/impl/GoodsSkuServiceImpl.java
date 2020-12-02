@@ -52,4 +52,15 @@ public class GoodsSkuServiceImpl implements GoodsSkuService {
         return goodsSkuMapper.getGoodsDefSku(goodsId);
     }
 
+    /**
+     * 根据skuId获取商品sku
+     *
+     * @param skuId skuId
+     * @return 商品sku
+     */
+    @Override
+    public GoodsSku getGoodsSkuBySkuId(String skuId) {
+        return goodsSkuMapper.getGoodsSkuBySkuId(skuId);
+    }
+
 }

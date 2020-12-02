@@ -34,4 +34,13 @@ public interface GoodsSkuMapper {
      * @return 商品默认规格
      */
     GoodsSku getGoodsDefSku(String goodsId);
+
+    /**
+     * 根据skuId获取商品sku
+     *
+     * @param skuId skuId
+     * @return 商品sku
+     */
+    GoodsSku getGoodsSkuBySkuId(String skuId);
+
 }

@@ -28,6 +28,8 @@ public enum ResponseMsg {
 
     ADD_ORDER_SUCCESS("ADD_ORDER_SUCCESS", "新增订单成功!"),
     ADD_ORDER_ERROR("ADD_ORDER_ERROR", "新增订单失败!"),
+
+    GOODS_SKU_NOT_EXISTS("GOODS_SKU_NOT_EXISTS", "该账号已存在!"),
     ;
 
     ResponseMsg(String responseCode, String responseMessage) {

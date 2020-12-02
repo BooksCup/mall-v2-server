@@ -26,6 +26,7 @@
         sku_id,
         address_id,
         number,
+        total_amount,
         remark,
         create_time
         )
@@ -38,6 +39,7 @@
         #{skuId},
         #{addressId},
         #{number},
+        #{totalAmount},
         #{remark},
         now()
         )
