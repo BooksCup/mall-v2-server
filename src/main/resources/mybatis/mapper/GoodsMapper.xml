@@ -7,6 +7,7 @@
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
         <result column="sales_volume" property="salesVolume" jdbcType="VARCHAR"/>
+        <result column="shop_id" property="shopId" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="goodsImage" type="com.bc.mall.v2.server.entity.GoodsImage">

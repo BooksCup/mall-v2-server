@@ -1,18 +1,17 @@
 package com.bc.mall.v2.server.controller;
 
 import com.bc.mall.v2.server.cons.Constant;
-import com.bc.mall.v2.server.entity.Goods;
-import com.bc.mall.v2.server.entity.GoodsImage;
-import com.bc.mall.v2.server.entity.GoodsLabel;
-import com.bc.mall.v2.server.entity.GoodsSku;
+import com.bc.mall.v2.server.entity.*;
 import com.bc.mall.v2.server.enums.ResponseMsg;
 import com.bc.mall.v2.server.service.GoodsService;
 import com.bc.mall.v2.server.service.GoodsSkuService;
+import com.bc.mall.v2.server.service.ShopService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -36,6 +35,9 @@ public class GoodsController {
 
     @Resource
     private GoodsSkuService goodsSkuService;
+
+    @Resource
+    private ShopService shopService;
 
     /**
      * 获取商品详情
@@ -72,6 +74,16 @@ public class GoodsController {
                 goods.setSellPrice(defGoodsSku.getMaxSellPrice());
             } else {
                 goods.setSellPrice(defGoodsSku.getMinSellPrice() + "-" + defGoodsSku.getMaxSellPrice());
+            }
+
+            // 店铺信息
+            if (!StringUtils.isEmpty(goods.getShopId())) {
+                paramMap.clear();
+                paramMap.put("shopId", goods.getShopId());
+                Shop shop = shopService.getShopByShopId(paramMap);
+                if (null != shop) {
+                    goods.setShop(shop);
+                }
             }
 
             responseEntity = new ResponseEntity<>(goods, HttpStatus.OK);

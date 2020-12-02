@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bc.mall.v2.server.mapper.ShopMapper">
+
+    <resultMap id="shop" type="com.bc.mall.v2.server.entity.Shop">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="store_id" property="storeId" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="logo" property="logo" jdbcType="VARCHAR"/>
+        <result column="follow_num" property="followNum" jdbcType="INTEGER"/>
+        <result column="is_open" property="isOpen" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getShopListByShopId" parameterType="map" resultMap="shop">
+        select
+        *
+        from t_shop
+        where id = #{shopId}
+    </select>
+
+</mapper>

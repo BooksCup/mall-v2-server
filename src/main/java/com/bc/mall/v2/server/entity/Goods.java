@@ -14,6 +14,8 @@ public class Goods {
     private String sellPrice;
     private String content;
     private Integer salesVolume;
+    private String shopId;
+    private Shop shop;
     private List<GoodsLabel> goodsLabelList;
     private List<GoodsImage> goodsImageList;
     private List<GoodsSku> goodsSkuList;
@@ -64,6 +66,22 @@ public class Goods {
 
     public void setSalesVolume(Integer salesVolume) {
         this.salesVolume = salesVolume;
+    }
+
+    public String getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
     public List<GoodsLabel> getGoodsLabelList() {
