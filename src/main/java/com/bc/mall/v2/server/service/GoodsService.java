@@ -38,4 +38,14 @@ public interface GoodsService {
      */
     List<GoodsImage> getGoodsImageListByGoodsId(Map<String, Object> paramMap);
 
+    /**
+     * 获取猜你喜欢商品列表
+     *
+     * @param pageNum  当前分页数
+     * @param pageSize 分页大小
+     * @param paramMap 参数map
+     * @return 猜你喜欢商品列表
+     */
+    List<Goods> getLikeGoodsList(int pageNum, int pageSize, Map<String, Object> paramMap);
+
 }

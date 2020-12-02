@@ -6,6 +6,7 @@ import com.bc.mall.v2.server.entity.GoodsLabel;
 import com.bc.mall.v2.server.mapper.GoodsLabelMapper;
 import com.bc.mall.v2.server.mapper.GoodsMapper;
 import com.bc.mall.v2.server.service.GoodsService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -62,5 +63,19 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public List<GoodsImage> getGoodsImageListByGoodsId(Map<String, Object> paramMap) {
         return goodsMapper.getGoodsImageListByGoodsId(paramMap);
+    }
+
+    /**
+     * 获取猜你喜欢商品列表
+     *
+     * @param pageNum  当前分页数
+     * @param pageSize 分页大小
+     * @param paramMap 参数map
+     * @return 猜你喜欢商品列表
+     */
+    @Override
+    public List<Goods> getLikeGoodsList(int pageNum, int pageSize, Map<String, Object> paramMap) {
+        PageHelper.startPage(pageNum, pageSize);
+        return goodsMapper.getLikeGoodsList(paramMap);
     }
 }

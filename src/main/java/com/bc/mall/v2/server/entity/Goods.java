@@ -11,6 +11,7 @@ public class Goods {
     private String id;
     private String storeId;
     private String name;
+    private String image;
     private String sellPrice;
     private String content;
     private Integer salesVolume;
@@ -42,6 +43,14 @@ public class Goods {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getSellPrice() {

@@ -28,4 +28,12 @@ public interface GoodsMapper {
      * @return 商品图片列表
      */
     List<GoodsImage> getGoodsImageListByGoodsId(Map<String, Object> paramMap);
+
+    /**
+     * 获取猜你喜欢商品列表
+     *
+     * @param paramMap 参数map
+     * @return 猜你喜欢商品列表
+     */
+    List<Goods> getLikeGoodsList(Map<String, Object> paramMap);
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bc.mall.v2.server.mapper.BannerMapper">
+
+    <resultMap id="banner" type="com.bc.mall.v2.server.entity.Banner">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="store_id" property="storeId" jdbcType="VARCHAR"/>
+        <result column="store_type" property="storeType" jdbcType="VARCHAR"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="link_type" property="linkType" jdbcType="VARCHAR"/>
+        <result column="link_route" property="linkRoute" jdbcType="VARCHAR"/>
+        <result column="link_url" property="linkUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getBannerList" parameterType="map" resultMap="banner">
+        select
+        *
+        from t_banner
+        where store_id = #{storeId}
+    </select>
+</mapper>

@@ -17,6 +17,15 @@
         <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap id="likeGoods" type="com.bc.mall.v2.server.entity.Goods">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="store_id" property="storeId" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="shop_id" property="shopId" jdbcType="VARCHAR"/>
+        <result column="sell_price" property="sellPrice" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <select id="getGoodsListByGoodsId" parameterType="map" resultMap="goods">
         select
         *
@@ -32,5 +41,28 @@
         where
         goods_id = #{goodsId}
         order by sort asc
+    </select>
+
+    <select id="getLikeGoodsList" parameterType="map" resultMap="likeGoods">
+        select
+        g.id,
+        g.store_id,
+        g.name,
+        g.shop_id,
+        g.image,
+        min(sku.sell_price) as sell_price,
+        sku.orig_price
+        from
+        t_goods g
+        right join t_goods_sku sku on g.id = sku.goods_id
+        left join t_shop s on g.shop_id = s.id
+        where g.store_id = #{storeId}
+        and g.status = '2'
+        and g.delete_status = '0'
+        and g.activity = '1'
+        and s.is_open = '1'
+        and g.show_address like '%1%'
+        group by sku.goods_id
+        order by g.create_time, g.sort desc
     </select>
 </mapper>
