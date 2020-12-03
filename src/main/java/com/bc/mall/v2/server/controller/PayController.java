@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -104,7 +107,7 @@ public class PayController {
             // 支付类型
             paraMap.put("trade_type", "JSAPI");
             // 回调地址
-            paraMap.put("notify_url", "http://wdwxsc.winddots.com/cloud-mall/pay/notify");
+            paraMap.put("notify_url", "https://wxmall.winddots.com/pay/wechatNotify");
             String sign = WxPayUtil.generateSignature(paraMap, storeConfig.getMchKey());
             paraMap.put("sign", sign);
             // 将所有参数(map)转xml格式
@@ -166,5 +169,61 @@ public class PayController {
             s = s.replaceAll("[.]$", "");
         }
         return s;
+    }
+
+    /**
+     * 微信支付回调
+     *
+     * @param request  请求
+     * @param response 响应
+     * @return 返给微信服务器
+     */
+    @RequestMapping("/wechatNotify")
+    public String wechatCallBack(HttpServletRequest request, HttpServletResponse response) {
+        InputStream is = null;
+        try {
+            // 获取请求的流信息(这里是微信发的xml格式所有只能使用流来读)
+            is = request.getInputStream();
+            String xml = WxPayUtil.InputStream2String(is);
+            // 将微信发的xml转map
+            Map<String, String> notifyMap = WxPayUtil.xmlToMap(xml);
+
+            logger.info("[wechatCallBack], 微信返回给回调函数的信息为: " + xml);
+
+            if (notifyMap.get("result_code").equals(Constant.SUCCESS)) {
+                // 商户订单号
+                String orderId = notifyMap.get("out_trade_no");
+                /*
+                 * 以下是自己的业务处理------仅做参考 更新order对应字段/已支付金额/状态码
+                 */
+                logger.info("[wechatCallBack], orderId=" + orderId);
+                // 更改订单状态和付款状态
+                Map<String, String> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
+                paramMap.put("orderId", orderId);
+                // 支付状态为已支付
+                paramMap.put("payStatus", Constant.PAY_STATUS_PAID);
+                // 类型微信小程序支付
+                paramMap.put("payType", Constant.PAY_TYPE_MINI_WECHAT);
+                // 状态更新为待发货
+                paramMap.put("status", Constant.ORDER_STATUS_AWAITING_SHIPMENT);
+                orderService.updateOrderAfterPay(paramMap);
+            }
+
+            // 告诉微信服务器收到信息了，不要在调用回调函数了
+            // 这里很重要回复微信服务器信息用流发送一个xml即可
+            response.getWriter().write("<xml><return_code><![CDATA[SUCCESS]]></return_code></xml>");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return null;
     }
 }

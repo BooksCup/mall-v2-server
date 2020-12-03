@@ -1,5 +1,6 @@
 package com.bc.mall.v2.server.controller;
 
+import com.bc.mall.v2.server.cons.Constant;
 import com.bc.mall.v2.server.entity.GoodsSku;
 import com.bc.mall.v2.server.entity.Order;
 import com.bc.mall.v2.server.enums.ResponseMsg;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 订单
@@ -85,6 +88,32 @@ public class OrderController {
             e.printStackTrace();
             logger.error("[getOrderById] error: " + e.getMessage());
             responseEntity = new ResponseEntity<>(new Order(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+
+    }
+
+    @ApiOperation(value = "根据订单ID获取订单", notes = "根据订单ID获取订单")
+    @PutMapping(value = "/{orderId}/updateOrderAfterPay")
+    public ResponseEntity<String> updateOrderAfterPay(
+            @PathVariable String orderId) {
+        logger.info("[updateOrderAfterPay] orderId: " + orderId);
+        ResponseEntity<String> responseEntity;
+        try {
+            Map<String, String> paramMap = new HashMap<>();
+            paramMap.put("orderId", orderId);
+            // 支付状态为已支付
+            paramMap.put("payStatus", Constant.PAY_STATUS_PAID);
+            // 类型微信小程序支付
+            paramMap.put("payType", Constant.PAY_TYPE_MINI_WECHAT);
+            // 状态更新为待发货
+            paramMap.put("status", Constant.ORDER_STATUS_AWAITING_SHIPMENT);
+            orderService.updateOrderAfterPay(paramMap);
+            responseEntity = new ResponseEntity<>("", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("[updateOrderAfterPay] error: " + e.getMessage());
+            responseEntity = new ResponseEntity<>("", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return responseEntity;
 

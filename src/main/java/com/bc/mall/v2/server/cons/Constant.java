@@ -40,4 +40,27 @@ public class Constant {
     public static final String SYMBOL_DOT = ".";
 
     public static final String SUCCESS = "SUCCESS";
+
+    // 支付类型
+    /**
+     * 微信小程序支付
+     */
+    public static final String PAY_TYPE_MINI_WECHAT = "5";
+
+    // 订单状态
+    /**
+     * 待发货(已付款)
+     */
+    public static final String ORDER_STATUS_AWAITING_SHIPMENT = "1";
+
+    // 付款状态
+    /**
+     * 未付款
+     */
+    public static final String PAY_STATUS_UNPAID = "0";
+
+    /**
+     * 已付款
+     */
+    public static final String PAY_STATUS_PAID = "1";
 }

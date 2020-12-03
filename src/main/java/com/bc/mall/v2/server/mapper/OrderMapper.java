@@ -2,6 +2,8 @@ package com.bc.mall.v2.server.mapper;
 
 import com.bc.mall.v2.server.entity.Order;
 
+import java.util.Map;
+
 
 /**
  * 订单
@@ -24,4 +26,11 @@ public interface OrderMapper {
      * @return 订单
      */
     Order getOrderById(String orderId);
+
+    /**
+     * 支付后更新订单
+     *
+     * @param paramMap 参数map
+     */
+    void updateOrderAfterPay(Map<String, String> paramMap);
 }
