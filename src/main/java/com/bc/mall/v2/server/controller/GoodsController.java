@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,36 @@ public class GoodsController {
 
     @Resource
     private ShopService shopService;
+
+    /**
+     * 获取猜你喜欢商品列表
+     *
+     * @param storeId 商城ID
+     * @param page    当前分页数
+     * @param limit   分页大小
+     * @return ResponseEntity
+     */
+    @ApiOperation(value = "获取猜你喜欢商品列表", notes = "获取猜你喜欢商品列表")
+    @GetMapping(value = "/like")
+    public ResponseEntity<List<Goods>> getLikeGoodsList(
+            @RequestParam String storeId,
+            @RequestParam(required = false, defaultValue = "1") Integer page,
+            @RequestParam(required = false, defaultValue = "10") Integer limit) {
+        logger.info("[getLikeGoodsList] storeId: " +
+                storeId + ", page: " + page + ", limit: " + limit);
+        ResponseEntity<List<Goods>> responseEntity;
+        try {
+            Map<String, Object> paramMap = new HashMap<>(Constant.DEFAULT_HASH_MAP_CAPACITY);
+            paramMap.put("storeId", storeId);
+            List<Goods> likeGoodsList = goodsService.getLikeGoodsList(page, limit, paramMap);
+            responseEntity = new ResponseEntity<>(likeGoodsList, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("[getLikeGoodsList] error: " + e.getMessage());
+            responseEntity = new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
+    }
 
     /**
      * 获取商品详情
