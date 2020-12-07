@@ -47,4 +47,12 @@ public interface UserAddressMapper {
      * @param paramMap 参数map
      */
     void resetDefUserAddress(Map<String, Object> paramMap);
+
+    /**
+     * 根据地址ID获取收货地址
+     *
+     * @param addressId 地址ID
+     * @return 收货地址
+     */
+    UserAddress getUserAddressById(String addressId);
 }

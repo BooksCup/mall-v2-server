@@ -75,4 +75,15 @@ public class UserAddressServiceImpl implements UserAddressService {
         paramMap.put("isDefault", Constant.IS_DEFAULT_FALSE);
         userAddressMapper.resetDefUserAddress(paramMap);
     }
+
+    /**
+     * 根据地址ID获取收货地址
+     *
+     * @param addressId 地址ID
+     * @return 收货地址
+     */
+    @Override
+    public UserAddress getUserAddressById(String addressId) {
+        return userAddressMapper.getUserAddressById(addressId);
+    }
 }

@@ -3,9 +3,11 @@ package com.bc.mall.v2.server.controller;
 import com.bc.mall.v2.server.cons.Constant;
 import com.bc.mall.v2.server.entity.GoodsSku;
 import com.bc.mall.v2.server.entity.Order;
+import com.bc.mall.v2.server.entity.UserAddress;
 import com.bc.mall.v2.server.enums.ResponseMsg;
 import com.bc.mall.v2.server.service.GoodsSkuService;
 import com.bc.mall.v2.server.service.OrderService;
+import com.bc.mall.v2.server.service.UserAddressService;
 import com.bc.mall.v2.server.utils.BigDecimalUtil;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -38,6 +40,9 @@ public class OrderController {
 
     @Resource
     private GoodsSkuService goodsSkuService;
+
+    @Resource
+    private UserAddressService userAddressService;
 
     /**
      * 生成订单
@@ -106,6 +111,10 @@ public class OrderController {
         ResponseEntity<Order> responseEntity;
         try {
             Order order = orderService.getOrderById(orderId);
+            if (null != order) {
+                UserAddress userAddress = userAddressService.getUserAddressById(order.getAddressId());
+                order.setUserAddress(userAddress);
+            }
             responseEntity = new ResponseEntity<>(order, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

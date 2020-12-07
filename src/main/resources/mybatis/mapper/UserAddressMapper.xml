@@ -76,4 +76,12 @@
         is_default = #{isDefault}
         where user_id = #{userId}
     </update>
+
+    <select id="getUserAddressById" parameterType="String" resultMap="userAddress">
+        select
+        *
+        from t_user_address
+        where id = #{addressId}
+    </select>
+
 </mapper>

@@ -47,4 +47,12 @@ public interface UserAddressService {
      */
     void resetDefUserAddress(String userId);
 
+    /**
+     * 根据地址ID获取收货地址
+     *
+     * @param addressId 地址ID
+     * @return 收货地址
+     */
+    UserAddress getUserAddressById(String addressId);
+
 }

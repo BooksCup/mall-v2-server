@@ -27,6 +27,8 @@ public class Order extends BaseResponse {
     private String skuImage;
     private String sharerId;
 
+    private UserAddress userAddress;
+
     public Order() {
 
     }
@@ -174,6 +176,14 @@ public class Order extends BaseResponse {
 
     public void setSharerId(String sharerId) {
         this.sharerId = sharerId;
+    }
+
+    public UserAddress getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(UserAddress userAddress) {
+        this.userAddress = userAddress;
     }
 }
 

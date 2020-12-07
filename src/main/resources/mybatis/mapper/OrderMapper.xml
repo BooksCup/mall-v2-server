@@ -53,10 +53,13 @@
     <select id="getOrderById" parameterType="String" resultMap="order">
         select
         o.*,
+        sku.sell_price,
+        sku.image as sku_image,
         g.name as goods_name,
         s.name as shop_name
         from t_order o
         left join t_goods g on o.goods_id = g.id
+        left join t_goods_sku sku on o.sku_id = sku.id
         left join t_shop s on g.shop_id = s.id
         where o.id = #{orderId}
     </select>
