@@ -19,6 +19,11 @@ public class HomeProfile {
      */
     private List<Goods> likeGoodsList;
 
+    /**
+     * 商品类别
+     */
+    private List<GoodsClass> goodsClassList;
+
     public void setBannerList(List<Banner> bannerList) {
         this.bannerList = bannerList;
     }
@@ -33,5 +38,13 @@ public class HomeProfile {
 
     public void setLikeGoodsList(List<Goods> likeGoodsList) {
         this.likeGoodsList = likeGoodsList;
+    }
+
+    public List<GoodsClass> getGoodsClassList() {
+        return goodsClassList;
+    }
+
+    public void setGoodsClassList(List<GoodsClass> goodsClassList) {
+        this.goodsClassList = goodsClassList;
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bc.mall.v2.server.mapper.GoodsClassMapper">
+
+    <resultMap id="goodsClass" type="com.bc.mall.v2.server.entity.GoodsClass">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="store_id" property="storeId" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="english_name" property="englishName" jdbcType="VARCHAR"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+        <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="delete_status" property="deleteStatus" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getGoodsClassList" parameterType="map" resultMap="goodsClass">
+        select
+        *
+        from t_goods_class
+        where store_id = #{storeId}
+        and parent_id = #{parentId}
+        and delete_status = #{deleteStatus}
+        order by sort desc
+    </select>
+</mapper>

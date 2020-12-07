@@ -3,8 +3,10 @@ package com.bc.mall.v2.server.controller;
 import com.bc.mall.v2.server.cons.Constant;
 import com.bc.mall.v2.server.entity.Banner;
 import com.bc.mall.v2.server.entity.Goods;
+import com.bc.mall.v2.server.entity.GoodsClass;
 import com.bc.mall.v2.server.entity.HomeProfile;
 import com.bc.mall.v2.server.service.BannerService;
+import com.bc.mall.v2.server.service.GoodsClassService;
 import com.bc.mall.v2.server.service.GoodsService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -36,6 +38,10 @@ public class IndexController {
     @Resource
     private GoodsService goodsService;
 
+    @Resource
+    private GoodsClassService goodsClassService;
+
+
     @ApiOperation(value = "获取首页信息", notes = "获取首页信息")
     @GetMapping(value = "/home")
     public ResponseEntity<HomeProfile> getHomeProfile(@RequestParam String storeId) {
@@ -51,6 +57,15 @@ public class IndexController {
             // 猜你喜欢商品
             List<Goods> likeGoodsList = goodsService.getLikeGoodsList(1, 10, paramMap);
             homeProfile.setLikeGoodsList(likeGoodsList);
+
+            // 商品类型
+            // 获取一级目录
+            paramMap.clear();
+            paramMap.put("storeId", storeId);
+            paramMap.put("parentId", Constant.FIRST_CLASS_PARENT_ID);
+            paramMap.put("deleteStatus", Constant.DELETE_STATUS_NOT);
+            List<GoodsClass> goodsClassList = goodsClassService.getGoodsClassList(paramMap);
+            homeProfile.setGoodsClassList(goodsClassList);
 
             responseEntity = new ResponseEntity<>(homeProfile, HttpStatus.OK);
         } catch (Exception e) {
