@@ -44,4 +44,12 @@ public interface OrderService {
      */
     List<Order> getOrderList(int pageNum, int pageSize, Map<String, Object> paramMap);
 
+    /**
+     * 获取订单号
+     *
+     * @param type 订单类型
+     * @return 订单号
+     */
+    String getOrderNo(String type);
+
 }

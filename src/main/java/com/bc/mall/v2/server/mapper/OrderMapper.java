@@ -42,4 +42,12 @@ public interface OrderMapper {
      * @return 订单列表
      */
     List<Order> getOrderList(Map<String, Object> paramMap);
+
+    /**
+     * 通过订单号获取订单列表
+     *
+     * @param orderNo 订单号
+     * @return 订单列表
+     */
+    List<Order> getOrderListByOrderNo(String orderNo);
 }

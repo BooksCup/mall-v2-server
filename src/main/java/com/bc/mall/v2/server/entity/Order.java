@@ -16,6 +16,7 @@ public class Order extends BaseResponse {
     private String goodsId;
     private String skuId;
     private String addressId;
+    private String orderNo;
     private Integer number;
     private BigDecimal totalAmount;
     private String status;
@@ -25,6 +26,7 @@ public class Order extends BaseResponse {
     private String goodsName;
     private String sellPrice;
     private String skuImage;
+    private String skuAttr;
     private String sharerId;
 
     private UserAddress userAddress;
@@ -98,6 +100,14 @@ public class Order extends BaseResponse {
         this.addressId = addressId;
     }
 
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
     public Integer getNumber() {
         return number;
     }
@@ -168,6 +178,14 @@ public class Order extends BaseResponse {
 
     public void setSkuImage(String skuImage) {
         this.skuImage = skuImage;
+    }
+
+    public String getSkuAttr() {
+        return skuAttr;
+    }
+
+    public void setSkuAttr(String skuAttr) {
+        this.skuAttr = skuAttr;
     }
 
     public String getSharerId() {

@@ -82,6 +82,9 @@ public class OrderController {
                 BigDecimal totalAmount = BigDecimalUtil.multiply(goodsSku.getSellPrice(), number);
                 order.setTotalAmount(totalAmount);
             }
+            String orderNo = orderService.getOrderNo(null);
+            order.setOrderNo(orderNo);
+
             orderService.addOrder(order);
             order.setResponseCode(ResponseMsg.ADD_ORDER_SUCCESS.getResponseCode());
             order.setResponseMessage(ResponseMsg.ADD_ORDER_SUCCESS.getResponseMessage());

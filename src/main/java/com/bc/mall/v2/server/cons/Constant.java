@@ -73,4 +73,10 @@ public class Constant {
      * 第一级父ID
      */
     public static final String FIRST_CLASS_PARENT_ID = "0";
+
+    /**
+     * 订单类型-"秒杀"
+     */
+    public static final String ORDER_TYPE_SECKILL = "MS";
+
 }

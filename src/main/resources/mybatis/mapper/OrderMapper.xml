@@ -9,6 +9,7 @@
         <result column="goods_id" property="goodsId" jdbcType="VARCHAR"/>
         <result column="sku_id" property="skuId" jdbcType="VARCHAR"/>
         <result column="address_id" property="addressId" jdbcType="VARCHAR"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
         <result column="number" property="number" jdbcType="INTEGER"/>
         <result column="total_amount" property="totalAmount" jdbcType="VARCHAR"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
@@ -17,6 +18,7 @@
         <result column="shop_name" property="shopName" jdbcType="VARCHAR"/>
         <result column="sell_price" property="sellPrice" jdbcType="VARCHAR"/>
         <result column="sku_image" property="skuImage" jdbcType="VARCHAR"/>
+        <result column="sku_attr" property="skuAttr" jdbcType="VARCHAR"/>
     </resultMap>
 
     <insert id="addOrder" parameterType="com.bc.mall.v2.server.entity.Order">
@@ -29,6 +31,7 @@
         sku_id,
         address_id,
         sharer_id,
+        order_no,
         number,
         total_amount,
         remark,
@@ -43,6 +46,7 @@
         #{skuId},
         #{addressId},
         #{sharerId},
+        #{orderNo},
         #{number},
         #{totalAmount},
         #{remark},
@@ -55,6 +59,7 @@
         o.*,
         sku.sell_price,
         sku.image as sku_image,
+        sku.attr as sku_attr,
         g.name as goods_name,
         s.name as shop_name
         from t_order o
@@ -89,6 +94,14 @@
         <if test="status != null and status != ''">
             and o.status = #{status}
         </if>
+        order by o.create_time desc
+    </select>
+
+    <select id="getOrderListByOrderNo" parameterType="String" resultMap="order">
+        select
+        *
+        from t_order
+        where order_no = #{orderNo}
     </select>
 
 </mapper>
